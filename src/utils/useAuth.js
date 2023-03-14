@@ -2,6 +2,7 @@ import React, { createContext, useContext } from 'react';
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
+  signOut,
 } from 'firebase/auth';
 import { auth } from '../service/firebase';
 
@@ -36,8 +37,10 @@ export const useProvideAuth = () => {
     );
   };
 
-  const signout = () => {
-    setUser(null);
+  const signout = async () => {
+    await signOut(auth).then(() => {
+      setUser(null);
+    });
   };
 
   React.useEffect(() => {

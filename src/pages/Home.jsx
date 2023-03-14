@@ -1,9 +1,8 @@
-import React from 'react'
+import React from 'react';
+import AppBar from '../components/AppBar';
 
 const Home = () => {
-  return (
-    <div>Home</div>
-  )
-}
+  return <AppBar />;
+};
 
-export default Home
+export default Home;
