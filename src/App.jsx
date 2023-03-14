@@ -7,6 +7,7 @@ import NAV_ITEMS from './constants/navigation';
 
 const SignIn = lazy(() => import('./components/Signin'));
 const Home = lazy(() => import('./pages/Home'));
+const PrivateRoute = lazy(() => import('./utils/PrivateRoute'));
 
 function App() {
   return (
@@ -22,7 +23,14 @@ function App() {
     >
       <AuthProvider>
         <Routes>
-          <Route path={NAV_ITEMS.HOME.to} element={<Home />} />
+          <Route
+            path={NAV_ITEMS.HOME.to}
+            element={
+              <PrivateRoute>
+                <Home />
+              </PrivateRoute>
+            }
+          />
           <Route path={NAV_ITEMS.SIGNIN.to} element={<SignIn />} />
         </Routes>
       </AuthProvider>
