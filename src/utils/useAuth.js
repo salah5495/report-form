@@ -19,11 +19,13 @@ export const useAuth = () => {
 
 export const useProvideAuth = () => {
   const [user, setUser] = React.useState(null);
+  const [loading, setLoading] = React.useState(true);
 
   const signin = (email, password) => {
     return signInWithEmailAndPassword(auth, email, password).then(
       (userCredential) => {
         setUser(userCredential.user);
+        setLoading(false);
         return userCredential.user;
       }
     );
@@ -32,6 +34,7 @@ export const useProvideAuth = () => {
     return createUserWithEmailAndPassword(auth, email, password).then(
       (userCredential) => {
         setUser(userCredential.user);
+        setLoading(false);
         return userCredential.user;
       }
     );
@@ -44,16 +47,17 @@ export const useProvideAuth = () => {
   };
 
   React.useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        setUser(user);
+    const unsubscribe = auth.onAuthStateChanged((userCredential) => {
+      if (userCredential) {
+        setUser(userCredential);
+        setLoading(false);
       } else {
         setUser(null);
       }
     });
 
     return () => unsubscribe();
-  }, [user]);
+  }, []);
 
-  return { user, signin, signup, signout };
+  return { user, signin, signup, signout, loading };
 };
