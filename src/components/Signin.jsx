@@ -12,7 +12,9 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
+import { useAuth } from '../utils/useAuth';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Copyright(props) {
   return (
@@ -23,8 +25,8 @@ function Copyright(props) {
       {...props}
     >
       {'Copyright © '}
-      <Link color='inherit' href='https://mui.com/'>
-        Your Website
+      <Link color='inherit' href=''>
+        Report Form
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -33,15 +35,20 @@ function Copyright(props) {
 }
 
 const SignIn = () => {
-  
+  const auth = useAuth();
+
   const theme = createTheme();
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    try {
+      await auth.signin(data.get('email'), data.get('password'));
+      toast.success('Sign In successfull');
+    } catch (error) {
+      console.log(error);
+      const errorMessage = error.message.match(/auth\/(.+?)\)/)[1];
+      toast.error(errorMessage);
+    }
   };
 
   return (
@@ -112,6 +119,7 @@ const SignIn = () => {
         </Box>
         <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
+      <ToastContainer />
     </ThemeProvider>
   );
 };
