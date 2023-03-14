@@ -3,8 +3,10 @@ import { Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './utils/useAuth';
 import { Suspense, lazy } from 'react';
 import { Backdrop, CircularProgress } from '@mui/material';
+import NAV_ITEMS from './constants/navigation';
 
 const SignIn = lazy(() => import('./components/Signin'));
+const Home = lazy(() => import('./pages/Home'));
 
 function App() {
   return (
@@ -20,7 +22,8 @@ function App() {
     >
       <AuthProvider>
         <Routes>
-          <Route path='/' element={<SignIn />} />
+          <Route path={NAV_ITEMS.HOME.to} element={<Home />} />
+          <Route path={NAV_ITEMS.SIGNIN.to} element={<SignIn />} />
         </Routes>
       </AuthProvider>
     </Suspense>

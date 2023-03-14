@@ -15,6 +15,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useAuth } from '../utils/useAuth';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Navigate, useLocation } from 'react-router-dom';
+import NAV_ITEMS from '../constants/navigation';
 
 function Copyright(props) {
   return (
@@ -36,6 +38,8 @@ function Copyright(props) {
 
 const SignIn = () => {
   const auth = useAuth();
+  const [redirect, setRedirect] = React.useState(false);
+  const location = useLocation();
 
   const theme = createTheme();
   const handleSubmit = async (event) => {
@@ -44,12 +48,21 @@ const SignIn = () => {
     try {
       await auth.signin(data.get('email'), data.get('password'));
       toast.success('Sign In successfull');
+      setRedirect(true);
     } catch (error) {
       console.log(error);
       const errorMessage = error.message.match(/auth\/(.+?)\)/)[1];
       toast.error(errorMessage);
     }
   };
+
+  if (redirect) {
+    return (
+      <Navigate
+        to={{ pathname: NAV_ITEMS.HOME.to, state: { from: location } }}
+      />
+    );
+  }
 
   return (
     <ThemeProvider theme={theme}>
