@@ -1,45 +1,39 @@
-import React, { createContext } from 'react';
+import React, { createContext, useContext } from 'react';
 import {
-  getAuth,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
 } from 'firebase/auth';
+import { auth } from '../service/firebase';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const auth = useAuth();
+  const auth = useProvideAuth();
   return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>;
 };
 
-const useAuth = () => {
-  const [user, setUser] = React.useState(null);
-  const [error, setError] = React.useState(null);
-  const auth = getAuth();
+export const useAuth = () => {
+  return useContext(AuthContext);
+};
 
-  const signin = async (email, password) => {
-    try {
-      await signInWithEmailAndPassword(auth, email, password).then(
-        (userCredential) => {
-          setUser(userCredential.user);
-        }
-      );
-    } catch (error) {
-      setError(error);
-      console.log(error);
-    }
+export const useProvideAuth = () => {
+  const [user, setUser] = React.useState(null);
+
+  const signin = (email, password) => {
+    return signInWithEmailAndPassword(auth, email, password).then(
+      (userCredential) => {
+        setUser(userCredential.user);
+        return userCredential.user;
+      }
+    );
   };
-  const signup = async (email, password) => {
-    try {
-      await createUserWithEmailAndPassword(auth, email, password).then(
-        (userCredential) => {
-          setUser(userCredential.user);
-        }
-      );
-    } catch (error) {
-      setError(error);
-      console.log(error);
-    }
+  const signup = (email, password) => {
+    return createUserWithEmailAndPassword(auth, email, password).then(
+      (userCredential) => {
+        setUser(userCredential.user);
+        return userCredential.user;
+      }
+    );
   };
 
   const signout = () => {
@@ -56,9 +50,7 @@ const useAuth = () => {
     });
 
     return () => unsubscribe();
-  }, [auth, user]);
+  }, [user]);
 
-  return { user, error, signin, signup, signout };
+  return { user, signin, signup, signout };
 };
-
-export default useAuth;
