@@ -4,7 +4,7 @@ const NAV_ITEMS = {
     text: 'Base Url',
   },
   HOME: {
-    to: `/`,
+    to: `/report-form`,
     text: 'Home',
   },
   SIGNIN: {
