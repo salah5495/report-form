@@ -3,11 +3,6 @@ export const data = [
   ['English', '', ''],
   ['Science', '', ''],
   ['History', '', ''],
-  ['TOTAL MARKS/Points', '', ' '],
-  ['MERN SCORE', '', ''],
-  ['POSITION THIS TERM', '', ''],
-  ['OUT OF', '', ''],
-  ['POSITION LAST TERM', '', ''],
 ];
 
 export const SELECTED_CLASS = 'selected';
