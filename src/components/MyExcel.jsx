@@ -3,21 +3,41 @@ import './style.css';
 import { HotTable, HotColumn } from '@handsontable/react';
 import { data } from './constant';
 import { getGrade, getPoints, getRemark } from '../utils/tableUtils';
-
 import { addClassesToRows, alignHeaders } from './hooks';
-
 import 'handsontable/dist/handsontable.min.css';
+
 const App = () => {
-  const dataWithpercentage = data.map((row) => {
-    const percentage = row[1] + row[2];
-    return [...row, percentage];
+  const dataWithCalculations = data.map((row) => {
+    const percentage = row[1] !== '' && row[2] !== '' ? row[1] + row[2] : '';
+    const grade = percentage !== '' ? getGrade(row[0], percentage) : '';
+    const points = grade !== '' ? getPoints(grade) : '';
+    const remark = grade !== '' ? getRemark(grade) : '';
+    return [...row, percentage, grade, points, remark];
   });
 
-  const [tableData, setTableData] = useState(dataWithpercentage);
-  const [totalPercentage, setTotalPercentage] = useState(0);
+  const [tableData, setTableData] = useState(dataWithCalculations);
+  const [totalPercentage, setTotalPercentage] = useState('');
+  const [totalPoints, setTotalPoints] = useState('');
+  const [meanScore, setMeanScore] = useState('');
+  const [meanPoints, setMeanPoints] = useState('');
 
-  const calculateTotalPercentage = (data) => {
-    return data.reduce((total, row) => total + row[3], 0);
+  const calculateTotals = (data) => {
+    const totals = data.reduce(
+      (totals, row) => {
+        if (row[3] !== '' && row[5] !== '') {
+          totals.totalPercentage += row[3];
+          totals.totalPoints += row[5];
+        }
+        return totals;
+      },
+      { totalPercentage: 0, totalPoints: 0 }
+    );
+
+    return {
+      ...totals,
+      meanScore: data.length > 0 ? totals.totalPercentage / data.length : '',
+      meanPoints: data.length > 0 ? totals.totalPoints / data.length : '',
+    };
   };
 
   const handleAfterChange = (changes, source) => {
@@ -37,23 +57,43 @@ const App = () => {
           updatedData[row] = newRowData;
           setTableData(updatedData);
 
-          // Update totalPercentage
-          setTotalPercentage(calculateTotalPercentage(updatedData));
+          // Update totalPercentage, totalPoints, meanScore, and meanPoints
+          const { totalPercentage, totalPoints, meanScore, meanPoints } =
+            calculateTotals(updatedData);
+          setTotalPercentage(totalPercentage);
+          setTotalPoints(totalPoints);
+          setMeanScore(meanScore);
+          setMeanPoints(meanPoints);
         }
       });
     }
   };
 
   React.useEffect(() => {
-    setTotalPercentage(calculateTotalPercentage(tableData));
+    const { totalPercentage, totalPoints, meanScore, meanPoints } =
+      calculateTotals(tableData);
+    setTotalPercentage(totalPercentage);
+    setTotalPoints(totalPoints);
+    setMeanScore(meanScore);
+    setMeanPoints(meanPoints);
   }, [tableData]);
 
-  const totalRow = ['TOTAL MARKS/POINTS', '', '', totalPercentage];
+  const totalRow = [
+    'TOTAL MARKS/POINTS',
+    '',
+    '',
+    totalPercentage,
+    '',
+    totalPoints,
+    '',
+  ];
+  const OtherRow = ['MEAN SCORE', '', '', meanScore, '', ''];
+  const GradeRow = ['MEAN GRADE', '', '', getGrade('', meanScore), '', '', ''];
 
   return (
     <div>
       <HotTable
-        data={[...tableData, totalRow]}
+        data={[...tableData, totalRow, OtherRow, GradeRow]}
         height={450}
         colWidths={[140, 126, 192, 100, 100, 90, 90, 110, 97, 100]}
         colHeaders={[
