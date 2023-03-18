@@ -1,4 +1,6 @@
 import { toast } from 'react-toastify';
+import makeData from '../constants/tableData';
+
 export const getGrade = (subject, percentage) => {
   const isHumanities =
     subject.toLowerCase().includes('english') ||
@@ -103,8 +105,15 @@ export const getRemark = (grade) => {
   }
 };
 
-export const getPercentage = (cat, main) => {
+export const getPercentage = (cat, main, row, percentageSum) => {
+  
+  if (row.subject === 'TOTAL MARKS/POINTS') {
+    return percentageSum;
+  }
   if (cat > 30 || main > 70) return 'Error';
   if ((cat && main) === undefined) return null;
-  return parseInt(cat) + parseInt(main);
+
+  const percentage = parseInt(cat) + parseInt(main);
+
+  return percentage;
 };

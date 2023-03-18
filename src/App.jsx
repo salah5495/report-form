@@ -6,7 +6,7 @@ import { Backdrop, CircularProgress } from '@mui/material';
 import NAV_ITEMS from './constants/navigation';
 
 const SignIn = lazy(() => import('./components/Signin'));
-const Home = lazy(() => import('./pages/Home'));
+const Home = lazy(() => import('./constants/pages/Home'));
 const PrivateRoute = lazy(() => import('./utils/PrivateRoute'));
 
 function App() {
@@ -32,10 +32,8 @@ function App() {
             }
           />
           <Route path={NAV_ITEMS.SIGNIN.to} element={<SignIn />} />
-        
 
           <Route path='*' element={<div>Route does not exist</div>} />
-          
         </Routes>
       </AuthProvider>
     </Suspense>

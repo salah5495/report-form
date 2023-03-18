@@ -98,7 +98,7 @@ function App() {
         columns: [
           {
             Header: '%',
-            accessor: '%',
+            accessor: 'percentage',
           },
           {
             Header: 'Grade',

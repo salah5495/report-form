@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useTable } from 'react-table';
 import makeData from '../constants/tableData';
+
 import {
   getPercentage,
   getGrade,
@@ -48,6 +49,7 @@ const EditableCell = ({
   row: { index },
   column: { id },
   updateMyData,
+
   data,
 }) => {
   const [value, setValue] = React.useState(initialValue);
@@ -68,10 +70,8 @@ const EditableCell = ({
   React.useEffect(() => {
     if (id === '%') {
       const subject = data[index].subject;
-      const percentage = parseInt(value);
+      let percentage = parseInt(value);
       const grade = getGrade(subject, percentage);
-
-      
 
       // Use optional chaining to check if the object is undefined
       const currentRow = data[index];
@@ -138,6 +138,44 @@ function Table({ columns, data, updateMyData, skipPageReset }) {
 }
 
 function Test() {
+  const [data, setData] = React.useState(() => makeData);
+  const [percentageSum, setPercentageSum] = React.useState(0);
+
+  const [skipPageReset, setSkipPageReset] = React.useState(false);
+
+  const updateMyData = (rowIndex, columnId, value) => {
+    setSkipPageReset(true);
+  
+    setData((old) =>
+      old.map((row, index) => {
+        if (index === rowIndex) {
+          return {
+            ...old[rowIndex],
+            [columnId]: value,
+          };
+        }
+        return row;
+      })
+    );
+  
+    // Update the percentageSum after updating the data
+    const newData = data.map((row, index) => {
+      if (index === rowIndex) {
+        return {
+          ...data[rowIndex],
+          [columnId]: value,
+        };
+      }
+      return row;
+    });
+  
+    const newPercentageSum = newData.reduce((acc, row) => {
+      const percentage = getPercentage(row.Cat, row.Main, row);
+      return acc + (isNaN(percentage) ? 0 : percentage);
+    }, 0);
+  
+    setPercentageSum(newPercentageSum);
+  };
   const columns = React.useMemo(
     () => [
       {
@@ -150,7 +188,13 @@ function Test() {
           {
             Header: 'out of 30',
             accessor: 'Cat',
-            Cell: EditableCell,
+            Cell: (cellProps) => (
+              <EditableCell
+                {...cellProps}
+                data={data}
+                updateMyData={updateMyData}
+              />
+            ),
           },
         ],
       },
@@ -161,7 +205,13 @@ function Test() {
           {
             Header: 'Out of 70',
             accessor: 'Main',
-            Cell: EditableCell,
+            Cell: (cellProps) => (
+              <EditableCell
+                {...cellProps}
+                data={data}
+                updateMyData={updateMyData}
+              />
+            ),
           },
         ],
       },
@@ -170,8 +220,9 @@ function Test() {
         columns: [
           {
             Header: '%',
-            default: '0',
-            accessor: (row) => getPercentage(row.Cat, row.Main),
+
+            accessor: (row) =>
+              getPercentage(row.Cat, row.Main, row, percentageSum),
           },
           {
             Header: 'Grade',
@@ -207,25 +258,16 @@ function Test() {
     []
   );
 
-  const [data, setData] = React.useState(() => makeData);
-  const [skipPageReset, setSkipPageReset] = React.useState(false);
-
-  const updateMyData = (rowIndex, columnId, value) => {
-    setSkipPageReset(true);
-    setData((old) =>
-      old.map((row, index) => {
-        if (index === rowIndex) {
-          return {
-            ...old[rowIndex],
-            [columnId]: value,
-          };
-        }
-        return row;
-      })
-    );
-  };
-
   React.useEffect(() => {
+    const updatePercentageSum = () => {
+      const sum = data.reduce((acc, row) => {
+        const percentage = getPercentage(row.Cat, row.Main, row);
+        return acc + (isNaN(percentage) ? 0 : percentage);
+      }, 0);
+      setPercentageSum(sum);
+    };
+
+    updatePercentageSum();
     setSkipPageReset(false);
   }, [data]);
 

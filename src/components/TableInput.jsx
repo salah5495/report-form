@@ -17,7 +17,7 @@ function AddRowForm({ onSubmit }) {
       subject,
       'out of 30': outOf30,
       'Out of 70': outOf70,
-      '%': percentage,
+      'percentage': percentage,
       Grade: grade,
       Points: points,
       Remarks: remarks,

@@ -19,6 +19,7 @@ export const useAuth = () => {
 
 export const useProvideAuth = () => {
   const [user, setUser] = React.useState(null);
+  const [total, setTotal] = React.useState(0);
   const [loading, setLoading] = React.useState(true);
 
   const signin = (email, password) => {
@@ -59,5 +60,5 @@ export const useProvideAuth = () => {
     return () => unsubscribe();
   }, []);
 
-  return { user, signin, signup, signout, loading };
+  return { user, signin, signup, signout, loading, total , setTotal};
 };
