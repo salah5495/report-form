@@ -1,8 +1,17 @@
 export const data = [
-  ['Math', '', ''],
-  ['English', '', ''],
-  ['Science', '', ''],
-  ['History', '', ''],
+  ['ENGLISH', '', ''],
+  ['KISWAHILI', '', ''],
+  ['MATHEMATICS', '', ''],
+  ['BIOLOGY', '', ''],
+  ['CHEMISTRY', '', ''],
+  ['PHYSICS', '', ''],
+  ['HISTORY & GOVT', '', ''],
+  ['GEOGRAPHY', '', ''],
+  ['IRE', '', ''],
+  ['AGRICULTURE', '', ''],
+  ['COMPUTER STUDIES', '', ''],
+  ['BUSINESS STUDIES', '', ''],
+  ['ARABIC', '', ''],
 ];
 
 export const SELECTED_CLASS = 'selected';

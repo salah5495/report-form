@@ -45,7 +45,13 @@ const App = () => {
       changes.forEach(([row, prop, oldValue, newValue]) => {
         if (row === data.length - 5) return;
 
-        if (prop === 1 || prop === 2) {
+        if (prop === 1) {
+          const newRowData = [...tableData[row]];
+          newRowData[1] = newValue; // Update value
+          const updatedData = [...tableData];
+          updatedData[row] = newRowData;
+          setTableData(updatedData);
+        } else if (prop === 1 || prop === 2) {
           const newRowData = [...tableData[row]];
           newRowData[3] = newRowData[1] + newRowData[2]; // Update percentage
           const grade = getGrade(newRowData[0], newRowData[3]); // Calculate grade
@@ -88,18 +94,29 @@ const App = () => {
     '',
   ];
   const OtherRow = ['MEAN SCORE', '', '', meanScore, '', ''];
-  const GradeRow = ['MEAN GRADE', '', '', getGrade('', meanScore), '', '', ''];
+  const GradeRow = ['MEAN GRADE', '', '', '', getGrade('', meanScore), '', ''];
+  const positionThisTermRow = ['POSITION THIS TERM', '', '', '', '', '', ''];
+  const outOfRow = ['OUT OF', '', '', '', '', '', ''];
+  const positionLastTermRow = ['POSITION LAST TERM', '', '', '', '', '', ''];
 
   return (
     <div>
       <HotTable
-        data={[...tableData, totalRow, OtherRow, GradeRow]}
-        height={450}
-        colWidths={[140, 126, 192, 100, 100, 90, 90, 110, 97, 100]}
+        data={[
+          ...tableData,
+          totalRow,
+          OtherRow,
+          GradeRow,
+          positionThisTermRow,
+          outOfRow,
+          positionLastTermRow,
+        ]}
+        height={550}
+        colWidths={[150, 60, 60, 80, 60, 60, 60, 70, 70, 70]}
         colHeaders={[
           'SUBJECTs',
           'CAT',
-          'MAIN EXAM',
+          'MAIN',
           'Percentage',
           'Grade',
           'Points',
@@ -118,7 +135,7 @@ const App = () => {
         manualRowMove={true}
         licenseKey='non-commercial-and-evaluation'
         afterChange={handleAfterChange}
-        columnHeaderHeight={60}
+        columnHeaderHeight={20}
       >
         <HotColumn data={0} readOnly />
         <HotColumn data={1} type='numeric' />

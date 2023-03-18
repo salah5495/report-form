@@ -32,6 +32,9 @@ export const addClassesToRows = (
   } else {
     Handsontable.dom.removeClass(parentElement, SELECTED_CLASS);
   }
+  // align everything left
+    Handsontable.dom.addClass(parentElement, 'htLeft');
+    
 
   // Add class to odd TRs
   if (row % 2 === 0) {
