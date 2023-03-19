@@ -6,14 +6,16 @@ import ReportForm from '../../components/ReportForm';
 import { Container } from '@mui/material';
 import CrudInput from '../../components/TableInput';
 import DataTable from '../../components/Test';
-import Test from '../../components/Test2';
-import MyExcel from '../../components/MyExcel'
+import Test from '../../components/Test';
+import MyExcel from '../../components/MyExcel';
+import Header from '../../components/Header';
 
 const Home = () => {
   return (
     <React.Fragment>
       <AppBar />
       <Container maxWidth='lg' sx={{ marginTop: '3rem' }}>
+        <Header />
         <MyExcel />
       </Container>
     </React.Fragment>

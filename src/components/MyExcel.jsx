@@ -136,6 +136,7 @@ const App = () => {
         licenseKey='non-commercial-and-evaluation'
         afterChange={handleAfterChange}
         columnHeaderHeight={20}
+        
       >
         <HotColumn data={0} readOnly />
         <HotColumn data={1} type='numeric' />
