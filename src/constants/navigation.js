@@ -8,7 +8,7 @@ const NAV_ITEMS = {
     text: 'Home',
   },
   SIGNIN: {
-    to: 'signin',
+    to: '/signin',
     text: 'signin',
   },
 };

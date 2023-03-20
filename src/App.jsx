@@ -5,6 +5,7 @@ import { Suspense, lazy } from 'react';
 import { Backdrop, CircularProgress } from '@mui/material';
 import NAV_ITEMS from './constants/navigation';
 import { TableInputProvider } from './utils/useTable';
+import { Navigate } from 'react-router';
 
 const SignIn = lazy(() => import('./components/Signin'));
 const Home = lazy(() => import('./pages/Home'));
@@ -25,7 +26,9 @@ function App() {
       <AuthProvider>
         <TableInputProvider>
           <Routes>
+            <Route path='/' element={<Navigate to={NAV_ITEMS.HOME.to} />} />
             <Route
+            
               path={NAV_ITEMS.HOME.to}
               element={
                 <PrivateRoute>

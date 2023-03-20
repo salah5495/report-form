@@ -54,6 +54,7 @@ export const useProvideAuth = () => {
         setLoading(false);
       } else {
         setUser(null);
+        
       }
     });
 
