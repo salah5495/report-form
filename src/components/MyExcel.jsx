@@ -111,17 +111,29 @@ const App = () => {
           outOfRow,
           positionLastTermRow,
         ]}
-        height={550}
-        colWidths={[150, 60, 60, 80, 60, 60, 60, 70, 70, 70]}
-        colHeaders={[
-          'SUBJECTs',
-          'CAT',
-          'MAIN',
-          'Percentage',
-          'Grade',
-          'Points',
-          'Remarks',
-          'INITIALS',
+        height={500}
+        colWidths={[150, 80, 80, 80, 60, 60, 60, 70, 70, 70]}
+        nestedHeaders={[
+          [
+            { label: 'SUBJECTs', colspan: 1 },
+            { label: 'CAT', colspan: 1 },
+            { label: 'MAIN ', colspan: 1 },
+            { label: 'Total', colspan: 3 },
+            { label: 'Remarks', colspan: 1 },
+            { label: 'INITIALS', colspan: 1 },
+          ],
+
+          [
+            '',
+            'out of 30',
+            'out of 70 ',
+            'Percentage',
+            'Grade',
+            'Points',
+            '',
+            '',
+            '',
+          ],
         ]}
         columnSorting={true}
         hiddenColumns={{
@@ -135,8 +147,7 @@ const App = () => {
         manualRowMove={true}
         licenseKey='non-commercial-and-evaluation'
         afterChange={handleAfterChange}
-        columnHeaderHeight={20}
-        
+        columnHeaderHeight={[20, 20]}
       >
         <HotColumn data={0} readOnly />
         <HotColumn data={1} type='numeric' />
@@ -146,7 +157,9 @@ const App = () => {
         <HotColumn data={5} readOnly />
         <HotColumn data={6} readOnly />
         <HotColumn data={7} />
+        
       </HotTable>
+      
     </div>
   );
 };

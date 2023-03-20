@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import AppBar from '../../components/AppBar';
-import { Grid } from '@mui/material';
+import { Grid, Button } from '@mui/material';
 import Crud from '../../components/Crud';
 import ReportForm from '../../components/ReportForm';
 import { Container } from '@mui/material';
@@ -9,15 +9,17 @@ import DataTable from '../../components/Test';
 import Test from '../../components/Test';
 import MyExcel from '../../components/MyExcel';
 import Header from '../../components/Header';
+import Last from '../../components/Last';
+import Combined from './Combined';
+
+
 
 const Home = () => {
+  
   return (
     <React.Fragment>
       <AppBar />
-      <Container maxWidth='lg' sx={{ marginTop: '3rem' }}>
-        <Header />
-        <MyExcel />
-      </Container>
+      <Combined />
     </React.Fragment>
   );
 };
