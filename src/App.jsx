@@ -3,13 +3,14 @@ import { Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './utils/useAuth';
 import { Suspense, lazy } from 'react';
 import { Backdrop, CircularProgress } from '@mui/material';
-import NAV_ITEMS from './constants/navigation';
 import { TableInputProvider } from './utils/useTable';
-import { Navigate } from 'react-router';
+
+
+// Import PrivateRoute first
+import PrivateRoute from './utils/PrivateRoute';
 
 const SignIn = lazy(() => import('./components/Signin'));
 const Home = lazy(() => import('./pages/Home'));
-const PrivateRoute = lazy(() => import('./utils/PrivateRoute'));
 
 function App() {
   return (
@@ -26,17 +27,16 @@ function App() {
       <AuthProvider>
         <TableInputProvider>
           <Routes>
-            <Route path='/' element={<Navigate to={NAV_ITEMS.HOME.to} />} />
             <Route
             
-              path={NAV_ITEMS.HOME.to}
+              path='/'
               element={
                 <PrivateRoute>
                   <Home />
                 </PrivateRoute>
               }
             />
-            <Route path={NAV_ITEMS.SIGNIN.to} element={<SignIn />} />
+            <Route path='/signin' element={<SignIn />} />
           </Routes>
         </TableInputProvider>
       </AuthProvider>

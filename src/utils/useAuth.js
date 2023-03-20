@@ -44,22 +44,22 @@ export const useProvideAuth = () => {
   const signout = async () => {
     await signOut(auth).then(() => {
       setUser(null);
+      setLoading(false);
     });
   };
 
   React.useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((userCredential) => {
       if (userCredential) {
-        setUser(userCredential);
+        setUser(userCredential.user); // set userCredential.user instead of userCredential
         setLoading(false);
       } else {
         setUser(null);
-        
       }
     });
 
     return () => unsubscribe();
   }, []);
 
-  return { user, signin, signup, signout, loading, total , setTotal};
+  return { user, signin, signup, signout, loading, total, setTotal };
 };

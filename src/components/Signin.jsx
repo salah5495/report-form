@@ -16,7 +16,6 @@ import { useAuth } from '../utils/useAuth';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Navigate, useLocation } from 'react-router-dom';
-import NAV_ITEMS from '../constants/navigation';
 
 function Copyright(props) {
   return (
@@ -57,11 +56,7 @@ const SignIn = () => {
   };
 
   if (redirect) {
-    return (
-      <Navigate
-        to={{ pathname: NAV_ITEMS.HOME.to, state: { from: location } }}
-      />
-    );
+    return <Navigate to={{ pathname: '/', state: { from: location } }} />;
   }
 
   return (
