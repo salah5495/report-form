@@ -19,7 +19,7 @@ const App = () => {
   const [totalPercentage, setTotalPercentage] = useState('');
   const [totalPoints, setTotalPoints] = useState('');
   const [meanScore, setMeanScore] = useState('');
-  const [meanPoints, setMeanPoints] = useState('');
+  
 
   const calculateTotals = (data) => {
     const totals = data.reduce(
@@ -64,24 +64,24 @@ const App = () => {
           setTableData(updatedData);
 
           // Update totalPercentage, totalPoints, meanScore, and meanPoints
-          const { totalPercentage, totalPoints, meanScore, meanPoints } =
+          const { totalPercentage, totalPoints, meanScore,  } =
             calculateTotals(updatedData);
           setTotalPercentage(totalPercentage);
           setTotalPoints(totalPoints);
           setMeanScore(meanScore);
-          setMeanPoints(meanPoints);
+          
         }
       });
     }
   };
 
   React.useEffect(() => {
-    const { totalPercentage, totalPoints, meanScore, meanPoints } =
+    const { totalPercentage, totalPoints, meanScore,} =
       calculateTotals(tableData);
     setTotalPercentage(totalPercentage);
     setTotalPoints(totalPoints);
     setMeanScore(meanScore);
-    setMeanPoints(meanPoints);
+    
   }, [tableData]);
 
   const totalRow = [
@@ -111,8 +111,8 @@ const App = () => {
           outOfRow,
           positionLastTermRow,
         ]}
-        height={500}
-        colWidths={[150, 80, 80, 80, 60, 60, 60, 70, 70, 70]}
+        height={600}
+        colWidths={[150, 80, 80, 80, 60, 60, 60, 70, 160, 70]}
         nestedHeaders={[
           [
             { label: 'SUBJECTs', colspan: 1 },

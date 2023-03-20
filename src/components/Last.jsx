@@ -1,7 +1,9 @@
 import { Typography } from '@mui/material';
 import React from 'react';
+import { useTable } from '../utils/useTable';
 
 const ReportCard = () => {
+  const utils = useTable();
   return (
     <div>
       <Typography
@@ -18,7 +20,7 @@ const ReportCard = () => {
         fontWeight='400'
         sx={{ margin: '10px 0' }}
       >
-        Below average perfomance, work extra hard for good grade.
+        {utils.classTeachersComment}
       </Typography>
       <hr />
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -46,7 +48,7 @@ const ReportCard = () => {
         fontWeight='400'
         sx={{ margin: '10px 0' }}
       >
-        Below average perfomance, work extra hard for good grade.
+        {utils.principalsComment}
       </Typography>
       <hr />
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>

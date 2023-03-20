@@ -1,5 +1,4 @@
-import { toast } from 'react-toastify';
-import makeData from '../constants/tableData';
+
 
 export const getGrade = (subject, percentage) => {
   const isHumanities =

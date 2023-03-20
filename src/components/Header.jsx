@@ -2,6 +2,7 @@ import { Typography } from '@mui/material';
 import React from 'react';
 import styled from 'styled-components';
 import Hulucho from '../assets/hulucho.jpeg';
+import { useTable } from '../utils/useTable';
 
 const HeaderContainer = styled.div`
   display: grid;
@@ -29,6 +30,7 @@ const PersonalContainer = styled.div`
 `;
 
 const Header = () => {
+  const utils = useTable();
   return (
     <HeaderContainer>
       <HuluchoImg src={Hulucho} alt='hulucho' />
@@ -52,37 +54,42 @@ const Header = () => {
           <div>
             <Typography fontSize={12} variant='h6' fontWeight={500}>
               NAMES:{' '}
-              <span style={{ color: 'red', textTransform:'uppercase' }}>
-                Abubakar Ali Mohamed
+              <span style={{ color: 'red', textTransform: 'uppercase' }}>
+                {utils.names}
               </span>
             </Typography>
             <Typography fontSize={13} variant='h6' fontWeight={500}>
-              FORM: <span style={{ color: 'red', textTransform:'uppercase' }}>
-                2
+              FORM:{' '}
+              <span style={{ color: 'red', textTransform: 'uppercase' }}>
+                {utils.form}
               </span>
             </Typography>
             <Typography fontSize={13} variant='h6' fontWeight={500}>
-              YEAR{' '} <span style={{ color: 'red', textTransform:'uppercase' }}>
-                2022
+              YEAR{' '}
+              <span style={{ color: 'red', textTransform: 'uppercase' }}>
+                {utils.year}
               </span>
             </Typography>
           </div>
           <div style={{ marginTop: '21px' }}>
             <Typography fontSize={13} variant='h6' fontWeight={500}>
-              STRM: <span style={{ color: 'red', textTransform:'uppercase' }}>
-                4
+              STRM:{' '}
+              <span style={{ color: 'red', textTransform: 'uppercase' }}>
+                {utils.stream}
               </span>
             </Typography>
             <Typography fontSize={13} variant='h6' fontWeight={500}>
-              TERM : <span style={{ color: 'red', textTransform:'uppercase' }}>
-                3
+              TERM :{' '}
+              <span style={{ color: 'red', textTransform: 'uppercase' }}>
+                {utils.term}
               </span>
             </Typography>
           </div>
           <Typography fontSize={13} variant='h6' fontWeight={500}>
-            ADM:{' '} : <span style={{ color: 'red', textTransform:'uppercase' }}>
-                3201
-              </span>
+            ADM: :{' '}
+            <span style={{ color: 'red', textTransform: 'uppercase' }}>
+                {utils.admissionNumber}
+            </span>
           </Typography>
         </PersonalContainer>
       </Content>

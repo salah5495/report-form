@@ -1,115 +1,71 @@
-import React, { useState } from 'react';
-import { TextField, Button, Grid } from '@mui/material';
+import { TextField } from '@mui/material';
+import React from 'react';
+import styled from 'styled-components';
+import { useTable } from '../utils/useTable';
 
-function AddRowForm({ onSubmit }) {
-  const [subject, setSubject] = useState('');
-  const [outOf30, setOutOf30] = useState('');
-  const [outOf70, setOutOf70] = useState('');
-  const [percentage, setPercentage] = useState('');
-  const [grade, setGrade] = useState('');
-  const [points, setPoints] = useState('');
-  const [remarks, setRemarks] = useState('');
-  const [initials, setInitials] = useState('');
+const PersonalContainer = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin: 20% 10%;
+`;
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSubmit({
-      subject,
-      'out of 30': outOf30,
-      'Out of 70': outOf70,
-      'percentage': percentage,
-      Grade: grade,
-      Points: points,
-      Remarks: remarks,
-      initials,
-    });
-    setSubject('');
-    setOutOf30('');
-    setOutOf70('');
-    setPercentage('');
-    setGrade('');
-    setPoints('');
-    setRemarks('');
-    setInitials('');
-  };
-
+const Header = () => {
+  const utils = useTable();
   return (
-    <form onSubmit={handleSubmit}>
-      <Grid container spacing={2}>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            fullWidth
-            label='Subject'
-            value={subject}
-            onChange={(e) => setSubject(e.target.value)}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            fullWidth
-            label='Out of 30'
-            value={outOf30}
-            onChange={(e) => setOutOf30(e.target.value)}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            fullWidth
-            label='Out of 70'
-            value={outOf70}
-            onChange={(e) => setOutOf70(e.target.value)}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            fullWidth
-            label='%'
-            value={percentage}
-            onChange={(e) => setPercentage(e.target.value)}
-          />
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <TextField
-            fullWidth
-            label='Grade'
-            value={grade}
-            onChange={(e) => setGrade(e.target.value)}
-          />
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <TextField
-            fullWidth
-            label='Points'
-            value={points}
-            onChange={(e) => setPoints(e.target.value)}
-          />
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <TextField
-            fullWidth
-            label='Initials'
-            value={initials}
-            onChange={(e) => setInitials(e.target.value)}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            fullWidth
-            label='Remarks'
-            value={remarks}
-            onChange={(e) => setRemarks(e.target.value)}
-            multiline
-            rows={2}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <Button variant='contained' type='submit'>
-            Add Row
-          </Button>
-        </Grid>
-      </Grid>
-    </form>
-  );
-}
+    <PersonalContainer>
+      <TextField
+        value={utils.names}
+        onChange={(e) => utils.setNames(e.target.value)}
+        label='Names'
+      />
 
-export default AddRowForm;
+      <TextField
+        value={utils.form}
+        onChange={(e) => utils.setForm(e.target.value)}
+        label='Form'
+      />
+
+      <TextField
+        value={utils.year}
+        onChange={(e) => utils.setYear(e.target.value)}
+        label='Year (2023)'
+      />
+
+      <TextField
+        value={utils.stream}
+        onChange={(e) => utils.setStream(e.target.value)}
+        label='Stream'
+      />
+
+      <TextField
+        value={utils.term}
+        onChange={(e) => utils.setTerm(e.target.value)}
+        label='Term'
+      />
+
+      <TextField
+        value={utils.admissionNumber}
+        onChange={(e) => utils.setAdmissionNumber(e.target.value)}
+        label='Admission Number'
+      />
+
+      <TextField
+        multiline
+        rows={2}
+        maxRows={4}
+        label="Class Teacher's Comments"
+        onChange={(e) => utils.setClassTeachersComment(e.target.value)}
+      />
+      <TextField
+        multiline
+        rows={2}
+        maxRows={4}
+        label="Principal's Comments"
+        onChange={(e) => utils.setPrincipalsComment(e.target.value)}
+      />
+    </PersonalContainer>
+  );
+};
+
+export default Header;

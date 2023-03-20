@@ -4,9 +4,10 @@ import { AuthProvider } from './utils/useAuth';
 import { Suspense, lazy } from 'react';
 import { Backdrop, CircularProgress } from '@mui/material';
 import NAV_ITEMS from './constants/navigation';
+import { TableInputProvider } from './utils/useTable';
 
 const SignIn = lazy(() => import('./components/Signin'));
-const Home = lazy(() => import('./constants/pages/Home'));
+const Home = lazy(() => import('./pages/Home'));
 const PrivateRoute = lazy(() => import('./utils/PrivateRoute'));
 
 function App() {
@@ -22,12 +23,19 @@ function App() {
       }
     >
       <AuthProvider>
-        <Routes>
-          <Route path={NAV_ITEMS.HOME.to} element={<Home />} />
-          <Route path={NAV_ITEMS.SIGNIN.to} element={<SignIn />} />
-
-          
-        </Routes>
+        <TableInputProvider>
+          <Routes>
+            <Route
+              path={NAV_ITEMS.HOME.to}
+              element={
+                <PrivateRoute>
+                  <Home />
+                </PrivateRoute>
+              }
+            />
+            <Route path={NAV_ITEMS.SIGNIN.to} element={<SignIn />} />
+          </Routes>
+        </TableInputProvider>
       </AuthProvider>
     </Suspense>
   );
